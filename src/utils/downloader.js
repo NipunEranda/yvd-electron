@@ -3,7 +3,6 @@ import ytdl from "@distube/ytdl-core";
 import fs from "fs";
 import ffmpeg from "fluent-ffmpeg"
 
-const url = "https://www.youtube.com/watch?v=ked1FZIw39w";
 let bestAudio;
 let videoQualties = [];
 
@@ -53,6 +52,10 @@ async function combineAudioVideo(videoPath, audioPath, outputPath) {
 // console.log("completed");
 
 async function init(url) {
+    // const url = "https://www.youtube.com/watch?v=LXb3EKWsInQ"
+    if(!url)
+        url = "https://www.youtube.com/watch?v=vHPMF5L-fo4"
+    
     const videoInfo = await ytdl.getInfo(url);
 
     bestAudio = videoInfo.formats.filter(f => !f.hasVideo && f.hasAudio).sort((a, b) => b.contentLength - a.contentLength)[0];
@@ -61,6 +64,8 @@ async function init(url) {
         if (!videoQualties.filter(vq => vq.itag == quality.itag)[0])
             videoQualties.push(quality);
     })
+
+    return { audio: bestAudio, qualities: videoQualties, info: videoInfo.videoDetails }
 }
 
 export default { init }

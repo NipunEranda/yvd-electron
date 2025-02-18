@@ -3,6 +3,8 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+import downloader from "../utils/downloader"
+
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -50,7 +52,10 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on("SEARCH_VIDEO", async (event, args) => {
+    const videoInfo = await downloader.init(args);
+    event.reply("SEARCH_VIDEO", JSON.stringify(videoInfo, null, 2));
+  })
 
   createWindow()
 
