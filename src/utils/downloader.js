@@ -53,9 +53,9 @@ async function combineAudioVideo(videoPath, audioPath, outputPath) {
 
 async function init(url) {
     // const url = "https://www.youtube.com/watch?v=LXb3EKWsInQ"
-    if(!url)
+    if (!url)
         url = "https://www.youtube.com/watch?v=vHPMF5L-fo4"
-    
+
     const videoInfo = await ytdl.getInfo(url);
 
     bestAudio = videoInfo.formats.filter(f => !f.hasVideo && f.hasAudio).sort((a, b) => b.contentLength - a.contentLength)[0];

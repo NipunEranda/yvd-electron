@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import YoutubeVideoCard from "../components/YoutubeVideoCard";
 
 const Index = () => {
   const [videoUrl, setVideoUrl] = useState("");
@@ -35,21 +36,8 @@ const Index = () => {
           Search
         </button></div>
       </div>
-      <div className="flex justify-center w-full">
-        <img src={videoInfo ? videoInfo.info.thumbnails.sort((a, b) => b.width - a.height)[0].url : ''} className="w-1/4" />
-      </div>
-      <div className="w-full text-center mt-5">
-        <span className="text-2xl font-semibold">{videoInfo ? videoInfo.info.title : ''}</span>
-      </div>
-      {videoInfo ? <div className="mt-2">
-        {videoInfo.qualities.sort((a, b) => a.quality.contentLength - b.quality.contentLength).map((quality, index) => (
-          <div key={index} className="w-full flex justify-center">
-            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 cursor-pointer">
-              {quality.qualityLabel} - {parseFloat(quality.contentLength / 8000000).toFixed(2)}MB
-            </button>
-          </div>
-        ))}
-      </div> : <></>}
+
+      { videoInfo ? <YoutubeVideoCard videoInfo={videoInfo} /> : <></> }
 
     </div>
   );
